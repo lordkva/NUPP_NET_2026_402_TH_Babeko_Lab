@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ComputerClub.Infrastructure.Models.ComputerModel>
+
+@{
+    ViewData["Title"] = "Комп'ютери";
+}
+
+<h1>Комп'ютери клубу</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Назва</th>
+            <th>Процесор</th>
+            <th>Оперативна пам'ять (ГБ)</th>
+            <th>Доступний</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var computer in Model)
+        {
+            <tr>
+                <td>@computer.Name</td>
+                <td>@computer.Processor</td>
+                <td>@computer.RamGb</td>
+                <td>@(computer.IsAvailable ? "Так" : "Ні")</td>
+            </tr>
+        }
+    </tbody>
+</table>

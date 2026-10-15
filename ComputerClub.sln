@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35828.75
+# Visual Studio Version 18
+VisualStudioVersion = 18.11.12306.390 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerClub.Common", "ComputerClub.Common\ComputerClub.Common.csproj", "{D839E213-D2D8-4293-AA63-5B289D441376}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerClub.Tests", "ComputerClub.Tests\ComputerClub.Tests.csproj", "{BDCD0EB5-4F67-48C7-A375-EA3E3F87951C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerClub.Infrastructure", "ComputerClub.Infrastructure\ComputerClub.Infrastructure.csproj", "{F02B7121-F8E8-4751-95DB-6D156008C3D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerClub.REST", "ComputerClub.REST\ComputerClub.REST.csproj", "{7A793AA3-3A26-4B46-9BF7-E125C4D80E13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerClub.MVC", "ComputerClub.MVC\ComputerClub.MVC.csproj", "{8AE1DEBA-770E-4DD9-9EA9-55B3514B76E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{F02B7121-F8E8-4751-95DB-6D156008C3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F02B7121-F8E8-4751-95DB-6D156008C3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F02B7121-F8E8-4751-95DB-6D156008C3D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A793AA3-3A26-4B46-9BF7-E125C4D80E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A793AA3-3A26-4B46-9BF7-E125C4D80E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A793AA3-3A26-4B46-9BF7-E125C4D80E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A793AA3-3A26-4B46-9BF7-E125C4D80E13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AE1DEBA-770E-4DD9-9EA9-55B3514B76E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AE1DEBA-770E-4DD9-9EA9-55B3514B76E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AE1DEBA-770E-4DD9-9EA9-55B3514B76E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AE1DEBA-770E-4DD9-9EA9-55B3514B76E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
