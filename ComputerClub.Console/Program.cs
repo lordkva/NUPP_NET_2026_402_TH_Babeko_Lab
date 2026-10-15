@@ -1,65 +1,52 @@
-﻿using ComputerClub.Common;
-CrudService<GamingComputer> service = new();
-service.ItemCreated += computer =>
-    Console.WriteLine($"Додано комп'ютер: {computer.Name}");
+﻿using System.Collections.Concurrent;
+using ComputerClub.Common;
 
-GamingComputer pc1 = new(
-    "Gaming PC 1", "Intel Core i5", 16,
-    "RTX 4060", 144, 80m);
-
-GamingComputer pc2 = new(
-    "Gaming PC 2", "AMD Ryzen 5", 32,
-    "RTX 4070", 165, 100m);
-service.Create(pc1);
-service.Create(pc2);
-Console.WriteLine("\nКомп'ютери клубу:");
-foreach (GamingComputer pc in service.ReadAll())
+const int count = 2000;
+CrudServiceAsync<GamingComputer> service = new("computers.json");
+ConcurrentBag<GamingComputer> computers = new();
+Parallel.For(0, count, _ =>
 {
-    pc.ShowInfo();
+    computers.Add(GamingComputer.CreateNew());
+});
+Console.WriteLine($"Створено об'єктів: {computers.Count}");
+Task<bool>[] tasks = computers.Select(computer => service.CreateAsync(computer)).ToArray();
+bool[] results = await Task.WhenAll(tasks);
+Console.WriteLine($"Додано до сервісу: {results.Count(x => x)}");
+List<GamingComputer> allComputers = (await service.ReadAllAsync()).ToList();
+Console.WriteLine("\nСтатистика:");
+Console.WriteLine($"Мінімальна ціна: {allComputers.Min(x => x.PricePerHour)} грн");
+Console.WriteLine($"Максимальна ціна: {allComputers.Max(x => x.PricePerHour)} грн");
+Console.WriteLine($"Середня ціна: {allComputers.Average(x => x.PricePerHour):F2} грн");
+Console.WriteLine($"Мінімальна RAM: {allComputers.Min(x => x.Ram)} GB");
+Console.WriteLine($"Максимальна RAM: {allComputers.Max(x => x.Ram)} GB");
+Console.WriteLine($"Середня RAM: {allComputers.Average(x => x.Ram):F2} GB");
+Console.WriteLine("\nПерша сторінка:");
+IEnumerable<GamingComputer> page = await service.ReadAllAsync(1, 10);
+foreach (GamingComputer computer in page)
+{
+    computer.ShowInfo();
 }
-Console.WriteLine("\nПошук комп'ютера:");
-GamingComputer? found = service.Read(pc1.Id);
-found?.ShowInfo();
-pc1.PricePerHour = 90m;
-service.Update(pc1);
-Console.WriteLine("\nПісля оновлення:");
-service.Read(pc1.Id)?.ShowInfo();
-Console.WriteLine(
-    $"\nВартість 3 годин: {pc1.CalculateCost(3)} грн");
-
-Console.WriteLine(
-    $"Усього створено комп'ютерів: {Computer.GetTotalComputers()}");
-
-Player player = new("Андрій", 19, "Player01");
-player.ShowInfo();
-
-GamingSession session = new(
-    player.Id, pc1.Id, DateTime.Now, 3);
-
-session.ShowInfo();
-
-string filePath = "computers.json";
-service.Save(filePath);
-
-Console.WriteLine("\nДані збережено у файл.");
-
-service.Remove(pc2);
-
-Console.WriteLine("\nПісля видалення:");
-
-foreach (GamingComputer pc in service.ReadAll())
+Console.WriteLine("\nПеребір через IEnumerable:");
+int shown = 0;
+foreach (GamingComputer computer in service)
 {
-    pc.ShowInfo();
+    computer.ShowInfo();
+    shown++;
+    if (shown == 3)
+        break;
 }
 
-CrudService<GamingComputer> loadedService = new();
-loadedService.Load(filePath);
+bool saved = await service.SaveAsync();
 
-Console.WriteLine("\nЗавантажені з файлу комп'ютери:");
+Console.WriteLine(saved ? "\nДані збережено." : "\nПомилка збереження.");
 
-foreach (GamingComputer pc in loadedService.ReadAll())
-{
-    pc.ShowInfo();
-}
+Console.WriteLine("\nПриклад lock:");
+SynchronizationExamples.LockExample();
+
+Console.WriteLine("\nПриклад SemaphoreSlim:");
+await SynchronizationExamples.SemaphoreExample();
+
+Console.WriteLine("\nПриклад AutoResetEvent:");
+SynchronizationExamples.AutoResetEventExample();
 
 Console.WriteLine("\nПрограму завершено.");

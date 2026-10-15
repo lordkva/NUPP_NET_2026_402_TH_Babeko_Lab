@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35828.75 d17.13
+VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerClub.Common", "ComputerClub.Common\ComputerClub.Common.csproj", "{D839E213-D2D8-4293-AA63-5B289D441376}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerClub.Console", "ComputerClub.Console\ComputerClub.Console.csproj", "{3AB02A82-5093-42FB-BD42-2B1DFB6F1DB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerClub.Tests", "ComputerClub.Tests\ComputerClub.Tests.csproj", "{BDCD0EB5-4F67-48C7-A375-EA3E3F87951C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{3AB02A82-5093-42FB-BD42-2B1DFB6F1DB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AB02A82-5093-42FB-BD42-2B1DFB6F1DB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AB02A82-5093-42FB-BD42-2B1DFB6F1DB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDCD0EB5-4F67-48C7-A375-EA3E3F87951C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCD0EB5-4F67-48C7-A375-EA3E3F87951C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCD0EB5-4F67-48C7-A375-EA3E3F87951C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCD0EB5-4F67-48C7-A375-EA3E3F87951C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

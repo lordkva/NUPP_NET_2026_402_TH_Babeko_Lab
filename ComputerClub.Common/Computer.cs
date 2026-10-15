@@ -16,7 +16,7 @@ public abstract class Computer : IEntity
         Name = name;
         Processor = processor;
         Ram = ram;
-        TotalComputers++;
+        Interlocked.Increment(ref TotalComputers);
     }
     public virtual void ShowInfo()
     {
@@ -25,6 +25,6 @@ public abstract class Computer : IEntity
     }
     public static int GetTotalComputers()
     {
-        return TotalComputers;
+        return Volatile.Read(ref TotalComputers);
     }
 }
