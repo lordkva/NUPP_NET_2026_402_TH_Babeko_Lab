@@ -1,52 +1,69 @@
-﻿using System.Collections.Concurrent;
-using ComputerClub.Common;
-
-const int count = 2000;
-CrudServiceAsync<GamingComputer> service = new("computers.json");
-ConcurrentBag<GamingComputer> computers = new();
-Parallel.For(0, count, _ =>
+﻿using ComputerClub.Infrastructure;
+using ComputerClub.Infrastructure.Models;
+using ComputerClub.Infrastructure.Repositories;
+using ComputerClub.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
+var databasePath = Path.Combine(
+    Directory.GetCurrentDirectory(),
+    "computerclub.db");
+var options = new DbContextOptionsBuilder<ComputerClubContext>()
+    .UseSqlite($"Data Source={databasePath}")
+    .Options;
+await using var context = new ComputerClubContext(options);
+await context.Database.MigrateAsync();
+var playerRepository = new Repository<PlayerModel>(context);
+var playerService = new CrudServiceAsync<PlayerModel>(playerRepository, context);
+var computerRepository = new Repository<GamingComputerModel>(context);
+var computerService = new CrudServiceAsync<GamingComputerModel>(
+    computerRepository, context);
+Console.WriteLine("=== COMPUTER CLUB: LAB 3 ===");
+var player = new PlayerModel
 {
-    computers.Add(GamingComputer.CreateNew());
-});
-Console.WriteLine($"Створено об'єктів: {computers.Count}");
-Task<bool>[] tasks = computers.Select(computer => service.CreateAsync(computer)).ToArray();
-bool[] results = await Task.WhenAll(tasks);
-Console.WriteLine($"Додано до сервісу: {results.Count(x => x)}");
-List<GamingComputer> allComputers = (await service.ReadAllAsync()).ToList();
-Console.WriteLine("\nСтатистика:");
-Console.WriteLine($"Мінімальна ціна: {allComputers.Min(x => x.PricePerHour)} грн");
-Console.WriteLine($"Максимальна ціна: {allComputers.Max(x => x.PricePerHour)} грн");
-Console.WriteLine($"Середня ціна: {allComputers.Average(x => x.PricePerHour):F2} грн");
-Console.WriteLine($"Мінімальна RAM: {allComputers.Min(x => x.Ram)} GB");
-Console.WriteLine($"Максимальна RAM: {allComputers.Max(x => x.Ram)} GB");
-Console.WriteLine($"Середня RAM: {allComputers.Average(x => x.Ram):F2} GB");
-Console.WriteLine("\nПерша сторінка:");
-IEnumerable<GamingComputer> page = await service.ReadAllAsync(1, 10);
-foreach (GamingComputer computer in page)
+    Name = "Ivan",
+    Email = $"ivan_{Guid.NewGuid():N}@example.com"
+};
+var playerCreated = await playerService.CreateAsync(player);
+Console.WriteLine($"Гравця створено: {playerCreated}");
+var computer = new GamingComputerModel
 {
-    computer.ShowInfo();
+    Name = "Gaming PC",
+    Processor = "Intel Core i5",
+    RamGb = 16,
+    VideoCard = "NVIDIA GeForce RTX 4060",
+    RefreshRate = 144,
+    Details = new GamingComputerDetailsModel
+    {
+        Keyboard = "Mechanical",
+        Mouse = "Gaming Mouse",
+        Monitor = "144 Hz"
+    }
+};
+var computerCreated = await computerService.CreateAsync(computer);
+Console.WriteLine($"Комп'ютер створено: {computerCreated}");
+var session = new GamingSessionModel
+{
+    PlayerId = player.Id,
+    ComputerId = computer.Id,
+    StartTime = DateTime.Now,
+    DurationMinutes = 60
+};
+await context.GamingSessions.AddAsync(session);
+await context.SaveChangesAsync();
+Console.WriteLine("Ігровий сеанс створено.");
+var players = await playerService.ReadAllAsync();
+Console.WriteLine("\nСписок гравців:");
+foreach (var item in players)
+{
+    Console.WriteLine(
+        $"Id: {item.Id}, Ім'я: {item.Name}, Email: {item.Email}");
 }
-Console.WriteLine("\nПеребір через IEnumerable:");
-int shown = 0;
-foreach (GamingComputer computer in service)
+var firstPage = await playerService.ReadAllAsync(1, 5);
+Console.WriteLine($"\nГравців на першій сторінці: {firstPage.Count()}");
+var sessions = await context.GamingSessions.Include(s => s.Player).Include(s => s.Computer).ToListAsync();
+Console.WriteLine("\nІгрові сеанси:");
+foreach (var item in sessions)
 {
-    computer.ShowInfo();
-    shown++;
-    if (shown == 3)
-        break;
+    Console.WriteLine($"{item.Player.Name} — {item.Computer.Name}, " + $"{item.DurationMinutes} хв.");
 }
-
-bool saved = await service.SaveAsync();
-
-Console.WriteLine(saved ? "\nДані збережено." : "\nПомилка збереження.");
-
-Console.WriteLine("\nПриклад lock:");
-SynchronizationExamples.LockExample();
-
-Console.WriteLine("\nПриклад SemaphoreSlim:");
-await SynchronizationExamples.SemaphoreExample();
-
-Console.WriteLine("\nПриклад AutoResetEvent:");
-SynchronizationExamples.AutoResetEventExample();
-
-Console.WriteLine("\nПрограму завершено.");
+Console.WriteLine($"\nФайл БД: {databasePath}");
+Console.WriteLine("Роботу завершено.");

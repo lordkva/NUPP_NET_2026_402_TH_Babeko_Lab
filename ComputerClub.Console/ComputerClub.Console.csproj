@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ComputerClub.Common\ComputerClub.Common.csproj" />
+    <ProjectReference Include="..\ComputerClub.Infrastructure\ComputerClub.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

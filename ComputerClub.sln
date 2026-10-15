@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerClub.Console", "Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerClub.Tests", "ComputerClub.Tests\ComputerClub.Tests.csproj", "{BDCD0EB5-4F67-48C7-A375-EA3E3F87951C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerClub.Infrastructure", "ComputerClub.Infrastructure\ComputerClub.Infrastructure.csproj", "{F02B7121-F8E8-4751-95DB-6D156008C3D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BDCD0EB5-4F67-48C7-A375-EA3E3F87951C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDCD0EB5-4F67-48C7-A375-EA3E3F87951C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDCD0EB5-4F67-48C7-A375-EA3E3F87951C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F02B7121-F8E8-4751-95DB-6D156008C3D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F02B7121-F8E8-4751-95DB-6D156008C3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F02B7121-F8E8-4751-95DB-6D156008C3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F02B7121-F8E8-4751-95DB-6D156008C3D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

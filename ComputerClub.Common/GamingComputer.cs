@@ -19,10 +19,7 @@ public class GamingComputer : Computer
     }
     public override void ShowInfo()
     {
-        Console.WriteLine(
-            $"{Name}, {Processor}, RAM: {Ram} GB, " +
-            $"GPU: {VideoCard}, {MonitorHz} Hz, " +
-            $"{PricePerHour} грн/год");
+        Console.WriteLine($"{Name}, {Processor}, RAM: {Ram} GB, " + $"GPU: {VideoCard}, {MonitorHz} Hz, " + $"{PricePerHour} грн/год");
     }
     public static GamingComputer CreateNew()
     {
