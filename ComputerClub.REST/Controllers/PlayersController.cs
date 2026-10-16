@@ -2,6 +2,7 @@
 using ComputerClub.Infrastructure.Services;
 using ComputerClub.REST.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ComputerClub.REST.Controllers;
 
@@ -17,6 +18,7 @@ public class PlayersController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<PlayerDto>>> GetAll(
         [FromQuery] int page = 1,
         [FromQuery] int amount = 20)
@@ -29,6 +31,7 @@ public class PlayersController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
+    [AllowAnonymous]
     public async Task<ActionResult<PlayerDto>> GetById(Guid id)
     {
         try
@@ -42,6 +45,7 @@ public class PlayersController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Employee")]
     public async Task<ActionResult<PlayerDto>> Create(CreatePlayerDto dto)
     {
         var player = new PlayerModel
@@ -60,6 +64,7 @@ public class PlayersController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
+    [Authorize(Roles = "Admin,Employee")]
     public async Task<IActionResult> Update(Guid id, UpdatePlayerDto dto)
     {
         PlayerModel player;
@@ -83,6 +88,7 @@ public class PlayersController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(Guid id)
     {
         PlayerModel player;

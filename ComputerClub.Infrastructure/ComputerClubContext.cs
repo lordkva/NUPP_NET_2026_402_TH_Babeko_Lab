@@ -1,7 +1,9 @@
 ﻿using ComputerClub.Infrastructure.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 namespace ComputerClub.Infrastructure;
-public class ComputerClubContext : DbContext
+
+public class ComputerClubContext: IdentityDbContext<ApplicationUser>
 {
     public ComputerClubContext(DbContextOptions<ComputerClubContext> options)
         : base(options)
